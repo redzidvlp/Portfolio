@@ -1,3 +1,46 @@
+// Hamburger menu functionality
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
+
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+});
+
+// Close menu when clicking a link
+document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    });
+});
+
+// Intersection Observer for active sections
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('nav a');
+
+const options = {
+    threshold: 0.5
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${id}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    });
+}, options);
+
+sections.forEach(section => {
+    observer.observe(section);
+});
+
 // scroll progress
 window.onscroll = function () {
     let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -6,10 +49,7 @@ window.onscroll = function () {
     document.getElementById("progressBar").style.width = scrolled + "%";
 };
 
-// section highlight
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('nav a');
-
+// section highlight using scroll
 window.addEventListener('scroll', () => {
     let current = '';
     sections.forEach(section => {
