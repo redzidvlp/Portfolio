@@ -8,14 +8,33 @@
     --section-spacing: 1.5rem;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: system-ui, -apple-system, sans-serif;
     line-height: 1.6;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 2rem;
     color: var(--primary-color);
     background-color: var(--background-color);
+}
+
+body.dark-mode {
+    --background-color: #1a202c;
+    --primary-color: #f7fafc;
+    --card-background: #2d3748;
+    --secondary-color: #cbd5e0;
+}
+
+body.dark-mode .card {
+    background-color: var(--card-background);
+}
+
+body.dark-mode a {
+    color: var(--secondary-color);
 }
 
 header {
@@ -24,7 +43,147 @@ header {
     padding: 2rem;
     background-color: var(--card-background);
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    padding: 10px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+}
+
+.theme-switch {
+    display: inline-block;
+    position: relative;
+    width: 60px;
+    height: 34px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--card-background);
+    transition: .4s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    border: 2px solid var(--accent-color);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 2px;
+    background-color: var(--accent-color);
+    transition: .4s;
+    z-index: 2;
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: var(--card-background);
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+.moon,
+.sun {
+    font-size: 16px;
+    line-height: 1;
+    color: var(--primary-color);
+}
+
+.moon {
+    margin-left: auto;
+}
+
+#progressBarContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: transparent;
+    z-index: 1000;
+}
+
+#progressBar {
+    height: 100%;
+    background-color: var(--accent-color);
+    width: 0%;
+    transition: width 0.1s ease;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    font-size: 11px;
+    justify-content: space-around;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--primary-color);
+    padding: 8px 16px;
+    border-radius: 5px;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--hover-color);
+    transition: width 0.3s ease-in-out;
+}
+
+nav a:hover {
+    background-color: var(--hover-color);
+    color: white;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+nav a.active {
+    background-color: var(--accent-color);
+    color: white;
 }
 
 h1 {
@@ -85,7 +244,7 @@ h2 {
     padding: 1.5rem;
     background-color: var(--card-background);
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .experience-item {
